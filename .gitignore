@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+data/train_dataset.csv
+data/parity_best.csv
+data/model_comparison.csv
+.ipynb_checkpoints/
