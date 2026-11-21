@@ -10,6 +10,40 @@ Beer-Lambert 법칙 기반 물리 모델과 AI 대리 모델(surrogate)을 이�
 - 변수 중요도: 도포량 > 막 불균일도 > 성분 농도
 - 역설계: 두 성분을 국내 사용한도(5% + 10%)까지 넣어도 최대 SPF는 2 mg/cm²에서 24.8, 1 mg/cm²에서 12.9
 
+## 결과 그래프
+
+모든 그래프는 `figures.py`로 생성했습니다 (Google Colab에서 실행).
+
+### 1. 디지타이징한 흡수 스펙트럼
+Herzog (2002) Fig.2를 WebPlotDigitizer로 직접 추출. 아보벤존 피크 ε ≈ 34,480 (문헌 환산값 34,143~36,005 범위 안).
+
+![흡수 스펙트럼](figures/fig0_spectra.png)
+
+### 2. 막 불균일 모델 보정
+막이 균일하다는 가정(점선)은 도포량 감소에 따른 SPF 하락을 과장함. 감마 분포 막 모델(k = 1.1)은 문헌 in vivo 측정값과 일치.
+
+![막 모델 보정](figures/fig0_calibration.png)
+
+### 3. 도포량별 투과율 스펙트럼
+도포량이 줄면 UVB·UVA 투과율이 모두 크게 증가함.
+
+![투과율 스펙트럼](figures/fig1_transmittance.png)
+
+### 4. 도포량 × 농도 SPF 히트맵
+SPF 등고선이 눕혀져 있음 → 농도를 올리는 것보다 도포량을 늘리는 것이 SPF에 더 효과적.
+
+![SPF 히트맵](figures/fig2_spf_heatmap.png)
+
+### 5. AI 예측 vs 물리 모델
+신경망 예측이 물리 모델 값과 거의 일치. 학습 범위 밖(외삽)에서는 오차가 조금 커짐.
+
+![AI 예측 비교](figures/fig3_ai_parity.png)
+
+### 6. 모델별 오차 비교
+학습 범위 밖에서는 트리 계열 모델(23~28%)보다 신경망(8.4%)이 훨씬 안정적.
+
+![모델 비교](figures/fig4_model_compare.png)
+
 ## 사용 성분
 
 | 성분 | 담당 영역 | 최대 흡수 | 국내 사용한도 |
@@ -36,6 +70,13 @@ sunscreen_sim/
 
 ## 실행 방법 (Google Colab)
 
+첫 번째 셀: 저장소 받기 (프로젝트 폴더로 이동해야 아래 명령이 동작함)
+```
+!git clone https://github.com/harampt8800/sunscreen-uv-simulation.git
+%cd sunscreen-uv-simulation
+```
+
+두 번째 셀: 설치와 실행
 ```
 !apt-get -qq install fonts-nanum > /dev/null
 !pip install -r requirements.txt -q
