@@ -70,13 +70,15 @@ sunscreen_sim/
 
 ## 실행 방법 (Google Colab)
 
-첫 번째 셀: 저장소 받기 (프로젝트 폴더로 이동해야 아래 명령이 동작함)
+1. 이 저장소 페이지에서 **Code → Download ZIP**으로 zip을 받습니다.
+2. 코랩에서 새 노트를 열고, 왼쪽 폴더 아이콘으로 zip을 업로드합니다.
+3. 첫 번째 셀: 압축 풀고 폴더로 이동
 ```
-!git clone https://github.com/harampt8800/sunscreen-uv-simulation.git
-%cd sunscreen-uv-simulation
+!rm -rf /content/sunscreen-uv-simulation-main
+!unzip -o -q "$(ls -t $(find / -name 'sunscreen-uv-simulation-main*.zip' -not -path '/proc/*' 2>/dev/null) | head -1)" -d /content
+%cd /content/sunscreen-uv-simulation-main
 ```
-
-두 번째 셀: 설치와 실행
+4. 두 번째 셀: 설치와 실행
 ```
 !apt-get -qq install fonts-nanum > /dev/null
 !pip install -r requirements.txt -q
@@ -86,7 +88,7 @@ sunscreen_sim/
 !python ai_surrogate.py
 %run figures.py
 ```
-
+그래프 한글이 네모로 나오면 **런타임 → 세션 다시 시작** 후 첫 번째 셀과 `%run figures.py`만 다시 실행합니다.
 ## 모델 요약
 
 - 흡광도: A(λ) = Σ εᵢ(λ) · cᵢ · l
